@@ -170,6 +170,14 @@ private struct LauncherDropdownHost: ViewModifier {
     }
 }
 
+private struct LauncherDropdownMaxHeightKey: EnvironmentKey { static let defaultValue: CGFloat? = nil }
+extension EnvironmentValues {
+    package var launcherDropdownMaxHeight: CGFloat? {
+        get { self[LauncherDropdownMaxHeightKey.self] }
+        set { self[LauncherDropdownMaxHeightKey.self] = newValue }
+    }
+}
+
 private struct LauncherCustomDropdownBox: View {
     let custom: LauncherCustomDropdown
     let maxHeight: CGFloat
@@ -179,6 +187,7 @@ private struct LauncherCustomDropdownBox: View {
     var body: some View {
         custom.content(close)
             .environment(\.launcherControlWidth, nil)
+            .environment(\.launcherDropdownMaxHeight, maxHeight)
             .frame(width: custom.width)
             .frame(maxHeight: maxHeight)
             .fixedSize(horizontal: false, vertical: true)
